@@ -7,47 +7,48 @@
 </head>
 <body>
 
-  <div class="container">
+<div class="main">
 
-    <!-- PORTADA -->
+  <!-- IZQUIERDA -->
+  <div class="left">
+
     <div class="cover">
-      <img src="img/cover.png" alt="Дивљи час">
-      <div class="overlay">
-        <h1>Дивљи час</h1>
+      <img src="img/cover.png" alt="cover">
+
+      <!-- PLAYER SOBRE LA IMAGEN -->
+      <div class="player-overlay">
+        <audio id="audio" controls></audio>
       </div>
     </div>
 
-    <!-- PLAYER -->
-    <div class="player">
+    <!-- VISUALIZER -->
+    <canvas id="visualizer"></canvas>
 
-      <audio id="audio" controls></audio>
+    <!-- PLAYLIST -->
+    <ul id="playlist">
+      <li data-src="music/dirizabli.mp3" data-lyrics="lyrics/dirizabli.txt">
+        Дирижабли над Дунавом
+      </li>
 
-      <canvas id="visualizer"></canvas>
+      <li data-src="music/kralica.mp3" data-lyrics="lyrics/kralica.txt">
+        Кралица
+      </li>
 
-      <ul id="playlist">
-        <li data-src="music/Дирижабли.mp3" data-lyrics="lyrics/dirizabli.txt">
-          Дирижабли над Дунавом
-        </li>
-
-        <li data-src="music/Кралица.mp3" data-lyrics="lyrics/kralica.txt">
-          Кралица
-        </li>
-
-        <li data-src="music/судбино.mp3" data-lyrics="lyrics/sudbino.txt">
-          Судбина моја
-        </li>
-      </ul>
-
-    </div>
-
-    <!-- LETRAS -->
-    <div class="lyrics-container">
-      <h2 id="song-title">Selecciona una canción</h2>
-      <div id="lyrics" class="lyrics"></div>
-    </div>
+      <li data-src="music/sudbino.mp3" data-lyrics="lyrics/sudbino.txt">
+        Судбина моја
+      </li>
+    </ul>
 
   </div>
 
-  <script src="script.js"></script>
+  <!-- DERECHA -->
+  <div class="right">
+    <h2 id="song-title">Selecciona una canción</h2>
+    <div id="lyrics" class="lyrics"></div>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
