@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Дивљи час</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- PORTADA -->
+    <div class="cover">
+      <img src="img/cover.png" alt="Дивљи час">
+      <div class="overlay">
+        <h1>Дивљи час</h1>
+      </div>
+    </div>
+
+    <!-- PLAYER -->
+    <div class="player">
+
+      <audio id="audio" controls></audio>
+
+      <canvas id="visualizer"></canvas>
+
+      <ul id="playlist">
+        <li data-src="music/Дирижабли.mp3" data-lyrics="lyrics/dirizabli.txt">
+          Дирижабли над Дунавом
+        </li>
+
+        <li data-src="music/Кралица.mp3" data-lyrics="lyrics/kralica.txt">
+          Кралица
+        </li>
+
+        <li data-src="music/судбино.mp3" data-lyrics="lyrics/sudbino.txt">
+          Судбина моја
+        </li>
+      </ul>
+
+    </div>
+
+    <!-- LETRAS -->
+    <div class="lyrics-container">
+      <h2 id="song-title">Selecciona una canción</h2>
+      <div id="lyrics" class="lyrics"></div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
