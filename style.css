@@ -1,38 +1,42 @@
 body {
   margin: 0;
-  font-family: Georgia, serif;
-  background: #0b0b0b;
+  font-family: "Georgia", serif;
+  background: radial-gradient(circle at top, #111, #050505);
   color: #eee;
 }
 
+/* LAYOUT */
 .main {
   display: flex;
   height: 100vh;
 }
 
+/* IZQUIERDA */
 .left {
-  width: 45%;
+  width: 40%;
   padding: 20px;
 }
 
+/* DERECHA */
 .right {
-  width: 55%;
-  padding: 30px;
-  background: linear-gradient(to left, #111, #0b0b0b);
+  width: 60%;
+  padding: 40px;
   overflow-y: auto;
 }
 
-/* PORTADA */
+/* PORTADA MÁS PEQUEÑA */
 .cover {
   position: relative;
-  max-height: 350px;
+  height: 260px;
+  border-radius: 14px;
   overflow: hidden;
-  border-radius: 12px;
 }
 
 .cover img {
   width: 100%;
-  filter: brightness(65%);
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(70%);
 }
 
 /* PLAYER */
@@ -45,70 +49,62 @@ body {
 
 audio {
   width: 100%;
+  opacity: 0.95;
 }
 
 /* VISUALIZER */
 #visualizer {
   width: 100%;
-  height: 80px;
+  height: 70px;
   margin-top: 10px;
-  background: rgba(0,0,0,0.3);
-  border-radius: 8px;
+  background: rgba(0,0,0,0.4);
+  border-radius: 10px;
 }
 
 /* PLAYLIST */
 #playlist {
   list-style: none;
   padding: 0;
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 #playlist li {
-  padding: 10px;
-  background: #1a1a1a;
-  margin-bottom: 6px;
-  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  background: #161616;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 #playlist li:hover {
-  background: #333;
+  background: #2a2a2a;
 }
 
 .active {
-  background: #8b2a2a !important;
+  background: linear-gradient(to right, #7a1f1f, #b34a4a);
   color: #ffd9a0;
 }
 
-/* LETRAS */
+/* TÍTULO */
 #song-title {
-  margin-bottom: 20px;
+  font-size: 28px;
+  margin-bottom: 25px;
   color: #ffd9a0;
 }
 
+/* LETRAS BONITAS */
 .lyrics {
-  white-space: pre-line;
-  line-height: 1.8;
-  font-size: 17px;
+  font-size: 18px;
+  line-height: 2;
 }
 
-/* PALABRAS */
-.word {
-  cursor: pointer;
+/* CADA LÍNEA */
+.line {
+  margin-bottom: 10px;
 }
 
-.word:hover {
+/* EFECTO HOVER */
+.line:hover {
   color: #ffd9a0;
-}
-
-/* TOOLTIP */
-.tooltip {
-  position: fixed;
-  background: #111;
-  color: #ffd9a0;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 14px;
-  display: none;
-  z-index: 1000;
 }
