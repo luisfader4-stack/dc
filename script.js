@@ -33,9 +33,6 @@ playlistItems.forEach(item => {
       .then(res => res.text())
       .then(text => {
         lyricsDiv.textContent = text;
-      })
-      .catch(() => {
-        lyricsDiv.textContent = "No se pudo cargar la letra.";
       });
   });
 });
@@ -50,7 +47,7 @@ function setupVisualizer() {
   source.connect(analyser);
   analyser.connect(audioCtx.destination);
 
-  analyser.fftSize = 256;
+  analyser.fftSize = 128;
 
   draw();
 }
@@ -73,19 +70,11 @@ function draw() {
     const x = i * barWidth;
     const y = canvas.height - barHeight;
 
-    // degradado romántico
-    const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-    gradient.addColorStop(0, "#ffd9a0");
-    gradient.addColorStop(1, "#7a1f1f");
-
-    ctx.fillStyle = gradient;
+    ctx.fillStyle = "#ffd9a0";
     ctx.fillRect(x, y, barWidth - 1, barHeight);
   }
 }
 
-// iniciar visualizador al reproducir
 audio.addEventListener("play", () => {
-  if (!audioCtx) {
-    setupVisualizer();
-  }
+  if (!audioCtx) setupVisualizer();
 });
