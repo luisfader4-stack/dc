@@ -104,6 +104,22 @@ audio {
   margin-bottom: 10px;
 }
 
+/* ESTROFAS */
+.stanza {
+  margin-bottom: 25px;
+}
+
+/* LÍNEAS */
+.line {
+  margin-bottom: 6px;
+  transition: 0.2s;
+}
+
+/* HOVER SUAVE */
+.line:hover {
+  color: #ffd9a0;
+}
+
 /* EFECTO HOVER */
 .line:hover {
   color: #ffd9a0;
