@@ -13,6 +13,11 @@ let audioCtx;
 let analyser;
 let source;
 
+// TOOLTIP
+const tooltip = document.createElement("div");
+tooltip.className = "tooltip";
+document.body.appendChild(tooltip);
+
 // PLAYLIST
 playlistItems.forEach(item => {
   item.addEventListener("click", () => {
@@ -25,23 +30,65 @@ playlistItems.forEach(item => {
     const title = item.textContent;
 
     audio.src = src;
+    audio.load();
 
-audio.load();
-
-audio.play().then(() => {
-  console.log("Reproduciendo");
-}).catch(err => {
-  console.error("Error al reproducir:", err);
-});
+    audio.play().catch(() => {});
 
     songTitle.textContent = title;
 
     fetch(lyricsFile)
       .then(res => res.text())
       .then(text => {
-        lyricsDiv.textContent = text;
+        lyricsDiv.innerHTML = processLyrics(text);
       });
   });
+});
+
+// PROCESAR PALABRAS
+function processLyrics(text) {
+  return text.split(/\s+/).map(word => {
+    const clean = word.toLowerCase().replace(/[.,—!?]/g, "");
+    return `<span class="word" data-word="${clean}">${word}</span>`;
+  }).join(" ");
+}
+
+// TRADUCCIÓN AUTOMÁTICA
+async function translateWord(word) {
+  try {
+    const res = await fetch(
+      `https://translate.googleapis.com/translate_a/single?client=gtx&sl=sr&tl=ru&dt=t&q=${encodeURIComponent(word)}`
+    );
+    const data = await res.json();
+    return data[0][0][0];
+  } catch {
+    return null;
+  }
+}
+
+// EVENTO HOVER / TOUCH
+document.addEventListener("mouseover", showTranslation);
+document.addEventListener("touchstart", showTranslation);
+
+async function showTranslation(e) {
+  if (e.target.classList.contains("word")) {
+
+    const word = e.target.dataset.word;
+
+    tooltip.textContent = "...";
+    tooltip.style.display = "block";
+
+    const rect = e.target.getBoundingClientRect();
+    tooltip.style.left = rect.left + "px";
+    tooltip.style.top = (rect.top - 30) + "px";
+
+    const translation = await translateWord(word);
+
+    tooltip.textContent = translation || "—";
+  }
+}
+
+document.addEventListener("mouseout", () => {
+  tooltip.style.display = "none";
 });
 
 // VISUALIZER
@@ -73,7 +120,6 @@ function draw() {
 
   for (let i = 0; i < bufferLength; i++) {
     const barHeight = dataArray[i];
-
     const x = i * barWidth;
     const y = canvas.height - barHeight;
 
