@@ -25,7 +25,7 @@ playlistItems.forEach(item => {
     const title = item.textContent;
 
     audio.src = src;
-    audio.play();
+    audio.play().catch(() => {});
 
     songTitle.textContent = title;
 
