@@ -25,7 +25,14 @@ playlistItems.forEach(item => {
     const title = item.textContent;
 
     audio.src = src;
-    audio.play().catch(() => {});
+
+audio.load();
+
+audio.play().then(() => {
+  console.log("Reproduciendo");
+}).catch(err => {
+  console.error("Error al reproducir:", err);
+});
 
     songTitle.textContent = title;
 
