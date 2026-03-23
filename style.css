@@ -5,19 +5,16 @@ body {
   color: #eee;
 }
 
-/* LAYOUT */
 .main {
   display: flex;
   height: 100vh;
 }
 
-/* IZQUIERDA */
 .left {
   width: 45%;
   padding: 20px;
 }
 
-/* DERECHA */
 .right {
   width: 55%;
   padding: 30px;
@@ -28,7 +25,6 @@ body {
 /* PORTADA */
 .cover {
   position: relative;
-  width: 100%;
   max-height: 350px;
   overflow: hidden;
   border-radius: 12px;
@@ -36,11 +32,10 @@ body {
 
 .cover img {
   width: 100%;
-  object-fit: cover;
   filter: brightness(65%);
 }
 
-/* PLAYER SOBRE IMAGEN */
+/* PLAYER */
 .player-overlay {
   position: absolute;
   bottom: 10px;
@@ -48,9 +43,8 @@ body {
   right: 10px;
 }
 
-.player-overlay audio {
+audio {
   width: 100%;
-  opacity: 0.9;
 }
 
 /* VISUALIZER */
@@ -75,7 +69,6 @@ body {
   margin-bottom: 6px;
   border-radius: 6px;
   cursor: pointer;
-  transition: 0.3s;
 }
 
 #playlist li:hover {
@@ -91,11 +84,31 @@ body {
 #song-title {
   margin-bottom: 20px;
   color: #ffd9a0;
-  font-size: 24px;
 }
 
 .lyrics {
   white-space: pre-line;
   line-height: 1.8;
   font-size: 17px;
+}
+
+/* PALABRAS */
+.word {
+  cursor: pointer;
+}
+
+.word:hover {
+  color: #ffd9a0;
+}
+
+/* TOOLTIP */
+.tooltip {
+  position: fixed;
+  background: #111;
+  color: #ffd9a0;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  display: none;
+  z-index: 1000;
 }
