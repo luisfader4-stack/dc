@@ -27,6 +27,21 @@ playlistItems.forEach(item => {
       });
   });
 });
+function displayLyrics(text) {
+  const paragraphs = text.split("\n\n"); // separa estrofas
+
+  lyricsDiv.innerHTML = paragraphs.map(p => {
+
+    const lines = p.split("\n");
+
+    return `
+      <div class="stanza">
+        ${lines.map(line => `<div class="line">${line}</div>`).join("")}
+      </div>
+    `;
+
+  }).join("");
+}
 
 // FORMATO BONITO DE LETRAS
 function displayLyrics(text) {
