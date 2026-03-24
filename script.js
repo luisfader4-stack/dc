@@ -1,12 +1,32 @@
+// ELEMENTOS
 const audio = document.getElementById("audio");
 const lyricsDiv = document.getElementById("lyrics");
 const playlistItems = document.querySelectorAll("#playlist li");
 const songTitle = document.getElementById("song-title");
 
-// PLAYLIST
+const canvas = document.getElementById("visualizer");
+const ctx = canvas.getContext("2d");
+
+// AJUSTE RESPONSIVE CANVAS
+function resizeCanvas() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+let audioCtx;
+let analyser;
+let source;
+
+// =========================
+// 🎵 PLAYLIST
+// =========================
 playlistItems.forEach(item => {
   item.addEventListener("click", () => {
 
+    // activar visual
     playlistItems.forEach(i => i.classList.remove("active"));
     item.classList.add("active");
 
@@ -14,21 +34,33 @@ playlistItems.forEach(item => {
     const lyricsFile = item.getAttribute("data-lyrics");
     const title = item.textContent;
 
+    // cargar audio
     audio.src = src;
     audio.load();
+
     audio.play().catch(() => {});
 
+    // título
     songTitle.textContent = title;
 
+    // cargar letras
     fetch(lyricsFile)
       .then(res => res.text())
       .then(text => {
         displayLyrics(text);
+      })
+      .catch(() => {
+        lyricsDiv.innerHTML = "No se pudieron cargar las letras.";
       });
   });
 });
+
+// =========================
+// 📜 FORMATO DE LETRAS (POESÍA)
+// =========================
 function displayLyrics(text) {
-  const paragraphs = text.split("\n\n"); // separa estrofas
+
+  const paragraphs = text.split("\n\n");
 
   lyricsDiv.innerHTML = paragraphs.map(p => {
 
@@ -43,24 +75,9 @@ function displayLyrics(text) {
   }).join("");
 }
 
-// FORMATO BONITO DE LETRAS
-function displayLyrics(text) {
-  const lines = text.split("\n");
-
-  lyricsDiv.innerHTML = lines.map(line => {
-    return `<div class="line">${line}</div>`;
-  }).join("");
-}
-const canvas = document.getElementById("visualizer");
-const ctx = canvas.getContext("2d");
-
-canvas.width = canvas.offsetWidth;
-canvas.height = canvas.offsetHeight;
-
-let audioCtx;
-let analyser;
-let source;
-
+// =========================
+// 🌊 VISUALIZER MODERNO
+// =========================
 function setupVisualizer() {
   audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   analyser = audioCtx.createAnalyser();
@@ -74,13 +91,6 @@ function setupVisualizer() {
 
   draw();
 }
-function resizeCanvas() {
-  canvas.width = canvas.offsetWidth;
-  canvas.height = canvas.offsetHeight;
-}
-
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
 
 function draw() {
   requestAnimationFrame(draw);
@@ -96,18 +106,16 @@ function draw() {
 
   ctx.beginPath();
 
+  // línea superior
   for (let i = 0; i < bufferLength; i++) {
     const x = (i / bufferLength) * canvas.width;
     const y = centerY - dataArray[i] * 0.4;
 
-    if (i === 0) {
-      ctx.moveTo(x, y);
-    } else {
-      ctx.lineTo(x, y);
-    }
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
   }
 
-  // línea inferior reflejada
+  // línea inferior (espejo)
   for (let i = bufferLength - 1; i >= 0; i--) {
     const x = (i / bufferLength) * canvas.width;
     const y = centerY + dataArray[i] * 0.4;
@@ -116,7 +124,7 @@ function draw() {
 
   ctx.closePath();
 
-  // GRADIENTE
+  // gradiente romántico
   const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
   gradient.addColorStop(0, "#ffcc88");
   gradient.addColorStop(1, "#aa3344");
@@ -125,7 +133,7 @@ function draw() {
   ctx.globalAlpha = 0.8;
   ctx.fill();
 
-  // GLOW
+  // glow
   ctx.shadowBlur = 20;
   ctx.shadowColor = "#ffcc88";
 
@@ -136,9 +144,7 @@ function draw() {
   ctx.shadowBlur = 0;
 }
 
-// ACTIVAR SOLO UNA VEZ
+// activar visualizer
 audio.addEventListener("play", () => {
-  if (!audioCtx) {
-    setupVisualizer();
-  }
+  if (!audioCtx) setupVisualizer();
 });
