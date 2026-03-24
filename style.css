@@ -1,4 +1,7 @@
+/* ========================= */
 /* BASE */
+/* ========================= */
+
 body {
   margin: 0;
   font-family: "Georgia", serif;
@@ -6,18 +9,31 @@ body {
   color: #eee;
 }
 
+/* ========================= */
 /* MOBILE FIRST */
+/* ========================= */
+
 .main {
   display: flex;
   flex-direction: column;
 }
 
+/* CONTENEDORES */
+.left, .right {
+  width: 100%;
+  padding: 15px;
+}
+
+/* ========================= */
 /* PORTADA */
+/* ========================= */
+
 .cover {
   width: 100%;
   height: 200px;
   overflow: hidden;
   position: relative;
+  border-radius: 10px;
 }
 
 .cover img {
@@ -27,7 +43,8 @@ body {
   filter: brightness(70%);
 }
 
-/* PLAYER */
+/* PLAYER SOBRE IMAGEN */
+
 .player-overlay {
   position: absolute;
   bottom: 10px;
@@ -39,18 +56,26 @@ audio {
   width: 100%;
 }
 
+/* ========================= */
 /* VISUALIZER */
+/* ========================= */
+
 #visualizer {
   width: 100%;
   height: 80px;
   margin: 10px 0;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.3);
 }
 
+/* ========================= */
 /* PLAYLIST */
+/* ========================= */
+
 #playlist {
   list-style: none;
-  padding: 10px;
-  margin: 0;
+  padding: 0;
+  margin-top: 15px;
 }
 
 #playlist li {
@@ -60,16 +85,16 @@ audio {
   background: #151515;
   font-size: 16px;
   cursor: pointer;
+  transition: 0.2s;
 }
 
 #playlist li:active {
   background: #8b2a2a;
 }
 
+/* ========================= */
 /* LETRAS */
-.right {
-  padding: 15px;
-}
+/* ========================= */
 
 #song-title {
   text-align: center;
@@ -93,9 +118,9 @@ audio {
   margin-bottom: 6px;
 }
 
-/* -------------------- */
-/* 💻 DESKTOP (solo después) */
-/* -------------------- */
+/* ========================= */
+/* DESKTOP */
+/* ========================= */
 
 @media (min-width: 768px) {
 
@@ -104,6 +129,7 @@ audio {
     height: 100vh;
   }
 
+  /* columnas */
   .left {
     width: 40%;
     padding: 20px;
@@ -115,24 +141,29 @@ audio {
     overflow-y: auto;
   }
 
+  /* portada más elegante */
   .cover {
     height: 260px;
-    border-radius: 12px;
+    border-radius: 14px;
   }
 
+  /* visualizer más grande */
   #visualizer {
     height: 100px;
   }
 
+  /* hover bonito */
   #playlist li:hover {
     background: #2a2a2a;
   }
 
+  /* activo */
   .active {
     background: linear-gradient(to right, #7a1f1f, #b34a4a);
     color: #ffd9a0;
   }
 
+  /* letras más grandes */
   #song-title {
     font-size: 26px;
   }
