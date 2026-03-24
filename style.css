@@ -124,3 +124,55 @@ audio {
 .line:hover {
   color: #ffd9a0;
 }
+
+/* 📱 RESPONSIVE MÓVIL */
+@media (max-width: 768px) {
+
+  .main {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .left, .right {
+    width: 100%;
+    padding: 15px;
+  }
+
+  /* portada más chica en móvil */
+  .cover {
+    height: 200px;
+  }
+
+  /* visualizer más compacto */
+  #visualizer {
+    height: 80px;
+  }
+
+  /* playlist más táctil */
+  #playlist li {
+    padding: 14px;
+    font-size: 16px;
+  }
+
+  /* título */
+  #song-title {
+    font-size: 22px;
+    text-align: center;
+  }
+
+  /* letras más cómodas */
+  .lyrics {
+    font-size: 16px;
+    line-height: 1.9;
+  }
+
+  /* estrofas */
+  .stanza {
+    margin-bottom: 20px;
+  }
+
+  /* player más visible */
+  audio {
+    height: 40px;
+  }
+}
