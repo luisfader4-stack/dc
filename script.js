@@ -74,6 +74,13 @@ function setupVisualizer() {
 
   draw();
 }
+function resizeCanvas() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
 
 function draw() {
   requestAnimationFrame(draw);
