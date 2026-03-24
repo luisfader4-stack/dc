@@ -1,13 +1,16 @@
+// =========================
 // ELEMENTOS
+// =========================
 const audio = document.getElementById("audio");
 const lyricsDiv = document.getElementById("lyrics");
-const playlistItems = document.querySelectorAll("#playlist li");
-const songTitle = document.getElementById("song-title");
+const songs = document.querySelectorAll(".song");
 
 const canvas = document.getElementById("visualizer");
 const ctx = canvas.getContext("2d");
 
-// AJUSTE RESPONSIVE CANVAS
+// =========================
+// RESPONSIVE CANVAS
+// =========================
 function resizeCanvas() {
   canvas.width = canvas.offsetWidth;
   canvas.height = canvas.offsetHeight;
@@ -21,33 +24,31 @@ let analyser;
 let source;
 
 // =========================
-// 🎵 PLAYLIST
+// PLAYLIST
 // =========================
-playlistItems.forEach(item => {
-  item.addEventListener("click", () => {
+songs.forEach(song => {
+  song.addEventListener("click", () => {
 
     // activar visual
-    playlistItems.forEach(i => i.classList.remove("active"));
-    item.classList.add("active");
+    songs.forEach(s => s.classList.remove("active"));
+    song.classList.add("active");
 
-    const src = item.getAttribute("data-src");
-    const lyricsFile = item.getAttribute("data-lyrics");
-    const title = item.textContent;
+    const src = song.getAttribute("data-src");
+    const lyricsFile = song.getAttribute("data-lyrics");
 
     // cargar audio
     audio.src = src;
     audio.load();
-
     audio.play().catch(() => {});
-
-    // título
-    songTitle.textContent = title;
 
     // cargar letras
     fetch(lyricsFile)
       .then(res => res.text())
       .then(text => {
         displayLyrics(text);
+
+        // scroll suave hacia letras en móvil
+        lyricsDiv.scrollIntoView({ behavior: "smooth" });
       })
       .catch(() => {
         lyricsDiv.innerHTML = "No se pudieron cargar las letras.";
@@ -56,7 +57,7 @@ playlistItems.forEach(item => {
 });
 
 // =========================
-// 📜 FORMATO DE LETRAS (POESÍA)
+// FORMATO DE LETRAS (POESÍA)
 // =========================
 function displayLyrics(text) {
 
@@ -76,7 +77,7 @@ function displayLyrics(text) {
 }
 
 // =========================
-// 🌊 VISUALIZER MODERNO
+// VISUALIZER MODERNO
 // =========================
 function setupVisualizer() {
   audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -106,39 +107,39 @@ function draw() {
 
   ctx.beginPath();
 
-  // línea superior
+  // onda superior
   for (let i = 0; i < bufferLength; i++) {
     const x = (i / bufferLength) * canvas.width;
-    const y = centerY - dataArray[i] * 0.4;
+    const y = centerY - dataArray[i] * 0.35;
 
     if (i === 0) ctx.moveTo(x, y);
     else ctx.lineTo(x, y);
   }
 
-  // línea inferior (espejo)
+  // espejo inferior
   for (let i = bufferLength - 1; i >= 0; i--) {
     const x = (i / bufferLength) * canvas.width;
-    const y = centerY + dataArray[i] * 0.4;
+    const y = centerY + dataArray[i] * 0.35;
     ctx.lineTo(x, y);
   }
 
   ctx.closePath();
 
-  // gradiente romántico
+  // gradiente pastel
   const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
-  gradient.addColorStop(0, "#ffcc88");
-  gradient.addColorStop(1, "#aa3344");
+  gradient.addColorStop(0, "#d9a7ff");
+  gradient.addColorStop(1, "#a7d8ff");
 
   ctx.fillStyle = gradient;
   ctx.globalAlpha = 0.8;
   ctx.fill();
 
-  // glow
-  ctx.shadowBlur = 20;
-  ctx.shadowColor = "#ffcc88";
+  // glow suave
+  ctx.shadowBlur = 15;
+  ctx.shadowColor = "#d9a7ff";
 
-  ctx.strokeStyle = "#ffd9a0";
-  ctx.lineWidth = 1.5;
+  ctx.strokeStyle = "#ffffff";
+  ctx.lineWidth = 1.2;
   ctx.stroke();
 
   ctx.shadowBlur = 0;
