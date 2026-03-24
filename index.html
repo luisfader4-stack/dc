@@ -1,429 +1,189 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>🎵 Дивљи час — етерна плејлиста</title>
-  
-  <!-- Google Fonts + smooth base -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
-  
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎵 Дивљи час</title>
 
-    body {
-      background: radial-gradient(circle at 20% 30%, #0b0a12, #030205);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Inter', sans-serif;
-      padding: 2rem;
-      position: relative;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, sans-serif;
+}
 
-    /* sutil ruido de fondo */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJmIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjciIG51bU9jdGF2ZXM9IjMiLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWx0ZXI9InVybCgjZikiIG9wYWNpdHk9IjAuMDMiLz48L3N2Zz4=');
-      background-repeat: repeat;
-      opacity: 0.2;
-      pointer-events: none;
-      z-index: 0;
-    }
+body {
+  background: linear-gradient(145deg, #fbeaff, #e8f6ff);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
 
-    /* contenedor principal — vidrio esmerilado */
-    .main {
-      max-width: 1400px;
-      width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      background: rgba(12, 10, 22, 0.55);
-      backdrop-filter: blur(18px);
-      border-radius: 2.5rem;
-      padding: 2rem;
-      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
-      transition: all 0.3s ease;
-      z-index: 2;
-    }
+/* TARJETA PRINCIPAL */
+.app {
+  width: 100%;
+  max-width: 900px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 25px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
 
-    /* COLUMNA IZQUIERDA */
-    .left {
-      flex: 1.2;
-      min-width: 260px;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
+/* HEADER */
+.header {
+  background: linear-gradient(90deg, #d9a7ff, #a7d8ff);
+  padding: 15px;
+  text-align: center;
+  font-weight: bold;
+  color: #333;
+  font-size: 18px;
+}
 
-    /* portada con elegancia */
-    .cover {
-      position: relative;
-      border-radius: 1.8rem;
-      overflow: hidden;
-      box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.6);
-      transition: transform 0.2s ease;
-    }
+/* CONTENIDO */
+.content {
+  padding: 20px;
+}
 
-    .cover img {
-      width: 100%;
-      height: auto;
-      display: block;
-      transition: scale 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-    }
+/* PORTADA */
+.cover {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  height: 200px;
+}
 
-    .cover:hover img {
-      scale: 1.02;
-    }
+.cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(80%);
+}
 
-    .player-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
-      padding: 1rem 1rem 1.2rem;
-      backdrop-filter: blur(4px);
-    }
+/* PLAYER SOBRE IMAGEN */
+.player-overlay {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+}
 
-    audio {
-      width: 100%;
-      border-radius: 80px;
-      background: rgba(255, 255, 255, 0.08);
-      outline: none;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
-    }
+audio {
+  width: 100%;
+}
 
-    audio::-webkit-media-controls-panel {
-      background: rgba(20, 18, 32, 0.9);
-      border-radius: 60px;
-    }
+/* VISUALIZER */
+#visualizer {
+  width: 100%;
+  height: 80px;
+  margin-top: 15px;
+  border-radius: 12px;
+}
 
-    audio::-webkit-media-controls-current-time-display,
-    audio::-webkit-media-controls-time-remaining-display {
-      color: #f0eef7;
-      font-weight: 500;
-    }
+/* PLAYLIST */
+.playlist {
+  margin-top: 20px;
+}
 
-    /* visualizer canvas — mística */
-    #visualizer {
-      width: 100%;
-      background: rgba(0, 0, 0, 0.35);
-      border-radius: 40px;
-      padding: 0.2rem 0;
-      backdrop-filter: blur(4px);
-      transition: all 0.2s;
-      box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(255, 255, 255, 0.02);
-    }
+.song {
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  background: #f3eaff;
+  cursor: pointer;
+  transition: 0.2s;
+}
 
-    /* PLAYLIST – joyas */
-    #playlist {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-      margin-top: 0.5rem;
-    }
+.song:hover {
+  background: #e6d4ff;
+}
 
-    #playlist li {
-      background: rgba(25, 23, 38, 0.6);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 1rem 1.2rem;
-      border-radius: 2rem;
-      font-weight: 500;
-      font-size: 1.05rem;
-      color: #e2e0f0;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      display: flex;
-      align-items: center;
-      gap: 0.9rem;
-      letter-spacing: -0.2px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
+.song.active {
+  background: #d9a7ff;
+  color: #fff;
+}
 
-    #playlist li:hover {
-      background: rgba(90, 70, 150, 0.55);
-      border-color: rgba(200, 170, 255, 0.5);
-      transform: translateX(8px);
-      color: white;
-    }
+/* LETRAS */
+.lyrics {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 15px;
+  background: #f9f9ff;
+  max-height: 300px;
+  overflow-y: auto;
+  line-height: 1.8;
+}
 
-    #playlist li.active {
-      background: linear-gradient(115deg, #b87cff30, #7f4bcb40);
-      border-left: 4px solid #c07cff;
-      border-right: 1px solid rgba(192, 124, 255, 0.4);
-      box-shadow: 0 10px 20px -5px rgba(128, 0, 255, 0.3);
-      color: #ffffff;
-      font-weight: 600;
-    }
+.stanza {
+  margin-bottom: 18px;
+}
 
-    /* COLUMNA DERECHA – lírica etérea */
-    .right {
-      flex: 1.8;
-      min-width: 280px;
-      background: rgba(8, 6, 18, 0.45);
-      backdrop-filter: blur(12px);
-      border-radius: 2rem;
-      padding: 1.6rem 1.8rem;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-      transition: all 0.2s;
-    }
+.line {
+  margin-bottom: 5px;
+}
 
-    #song-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.1rem;
-      font-weight: 600;
-      background: linear-gradient(135deg, #f2e9ff, #cbb2ff);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      margin-bottom: 1.6rem;
-      letter-spacing: -0.3px;
-      border-left: 3px solid #b77eff;
-      padding-left: 1.2rem;
-      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    }
+/* MÓVIL */
+@media (max-width: 600px) {
+  .cover {
+    height: 160px;
+  }
 
-    /* contenedor de letras – con scroll poético */
-    .lyrics {
-      max-height: 55vh;
-      overflow-y: auto;
-      padding-right: 0.6rem;
-      font-family: 'Inter', sans-serif;
-      color: #d9d4f0;
-      line-height: 1.55;
-      scroll-behavior: smooth;
-    }
-
-    /* estilizar scroll */
-    .lyrics::-webkit-scrollbar {
-      width: 5px;
-    }
-
-    .lyrics::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 10px;
-    }
-
-    .lyrics::-webkit-scrollbar-thumb {
-      background: #b77eff;
-      border-radius: 10px;
-    }
-
-    /* estructura de estrofas y versos */
-    .stanza {
-      margin-bottom: 1.7rem;
-      animation: fadeInUp 0.3s ease;
-    }
-
-    .line {
-      margin-bottom: 0.35rem;
-      font-weight: 400;
-      font-size: 0.95rem;
-      transition: all 0.1s;
-      letter-spacing: 0.01em;
-    }
-
-    /* resaltar línea principal del coro opcionalmente */
-    .stanza:has(.line:contains("Припев")) .line,
-    .line:first-child:has(+ .line) {
-      font-weight: 500;
-    }
-
-    /* versos especiales (bridge, final) */
-    .stanza .line:first-child:is(:contains("Припев"), :contains("Мост"), :contains("Завршница")) {
-      font-weight: 600;
-      color: #e2b7ff;
-      margin-top: 0.6rem;
-      font-size: 1rem;
-      letter-spacing: -0.2px;
-    }
-
-    /* transiciones suaves */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 880px) {
-      body {
-        padding: 1rem;
-      }
-      .main {
-        flex-direction: column;
-        padding: 1.5rem;
-        gap: 1.5rem;
-      }
-      .left, .right {
-        width: 100%;
-      }
-      #song-title {
-        font-size: 1.8rem;
-      }
-      .lyrics {
-        max-height: 40vh;
-      }
-    }
-
-    /* detalles extra de brillo */
-    .cover::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 1.8rem;
-      padding: 2px;
-      background: radial-gradient(ellipse at 30% 40%, rgba(255, 210, 255, 0.3), transparent 70%);
-      pointer-events: none;
-      opacity: 0.5;
-    }
-
-    /* animación de cambio de canción (glow) */
-    .right {
-      transition: box-shadow 0.3s;
-    }
-    .active-track-pulse {
-      box-shadow: 0 0 0 2px rgba(183, 126, 255, 0.5), 0 15px 35px rgba(0, 0, 0, 0.4);
-    }
-
-    /* texto del reproductor mejorado */
-    audio {
-      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
-    }
-
-    /* elegante para móvil */
-    @media (max-width: 500px) {
-      #playlist li {
-        padding: 0.8rem 1rem;
-        font-size: 0.9rem;
-      }
-      .line {
-        font-size: 0.85rem;
-      }
-    }
-  </style>
+  .lyrics {
+    max-height: none;
+  }
+}
+</style>
 </head>
+
 <body>
 
-<div class="main">
+<div class="app">
 
-  <!-- IZQUIERDA - arte, audio, visual y playlist -->
-  <div class="left">
+  <div class="header">
+    🎵 Дивљи час · Музика
+  </div>
 
+  <div class="content">
+
+    <!-- PORTADA -->
     <div class="cover">
-      <img src="./1_files/cover.png" alt="cover art Divlji čas">
+      <img src="img/cover.png">
+
       <div class="player-overlay">
-        <audio id="audio" controls preload="metadata" src="/dc/music/kralica.mp3"></audio>
+        <audio id="audio" controls></audio>
       </div>
     </div>
 
-    <canvas id="visualizer" width="538" height="100" style="width:100%; height:auto; max-width:100%; border-radius:30px;"></canvas>
+    <!-- VISUALIZER -->
+    <canvas id="visualizer"></canvas>
 
-    <ul id="playlist">
-      <li data-src="/dc/music/dirizabli.mp3" data-lyrics="lyrics/dirizabli.txt">
+    <!-- PLAYLIST -->
+    <div class="playlist">
+      <div class="song" data-src="/dc/music/dirizabli.mp3" data-lyrics="lyrics/dirizabli.txt">
         🎵 Дирижабли над Дунавом
-      </li>
-      <li data-src="/dc/music/kralica.mp3" data-lyrics="lyrics/kralica.txt" class="active">
+      </div>
+
+      <div class="song" data-src="/dc/music/kralica.mp3" data-lyrics="lyrics/kralica.txt">
         👑 Кралица
-      </li>
-      <li data-src="/dc/music/sudbino.mp3" data-lyrics="lyrics/sudbino.txt">
+      </div>
+
+      <div class="song" data-src="/dc/music/sudbino.mp3" data-lyrics="lyrics/sudbino.txt">
         🔥 Судбина моја
-      </li>
-    </ul>
-
-  </div>
-
-  <!-- DERECHA - lírica viva -->
-  <div class="right">
-    <h2 id="song-title">👑 Кралица</h2>
-    <div id="lyrics" class="lyrics">
-      <!-- Contenido inicial de "Кралица" para mantener estructura, script.js cargará desde .txt pero esto es respaldo visual -->
-      <div class="stanza">
-        <div class="line">Кралица</div>
-      </div>
-      <div class="stanza">
-        <div class="line">На путу где ветар пече,</div><div class="line">где тишина гласно тече,</div><div class="line">сенка иде, не зна лом,</div><div class="line">кад се небо сруши — гром.</div>
-      </div>
-      <div class="stanza">
-        <div class="line">У очима олује старе,</div><div class="line">на кожи јој тајне жаре,</div><div class="line">нико не зна њен траг,</div><div class="line">ал’ се осети њена снага.</div>
-      </div>
-      <div class="stanza">
-        <div class="line">Припев:</div><div class="line">Носи ватру што не гаси,</div><div class="line">ни кад свет јој сенке баци,</div><div class="line">није круна што је краси,</div><div class="line">већ терет што душу спаси.</div>
-      </div>
-      <div class="stanza">
-        <div class="line">Није краљица што се види,</div><div class="line">ни по оном што јој свет приди,</div><div class="line">већ што стоји кад све пада,</div><div class="line">кад се руши свака нада.</div>
-      </div>
-      <div class="stanza">
-        <div class="line">Куплет 2:</div><div class="line">Хода тамо где земља памти,</div><div class="line">где се истина у тишини кланти,</div><div class="line">у грудима камен бије,</div><div class="line">име своје не открије.</div>
-      </div>
-      <div class="stanza">
-        <div class="line">Кад са севера ветар лаже,</div><div class="line">све путеве криво каже,</div><div class="line">она слуша што не збори —</div><div class="line">што у срцу тихо гори.</div>
-      </div>
-      <div class="stanza">
-        <div class="line">Носи ватру што не гаси,</div><div class="line">ни кад свет јој сенке баци,</div><div class="line">није круна што је краси,</div><div class="line">већ терет што душу спаси.</div>
-      </div>
-      <div class="stanza">
-        <div class="line">Није краљица што се види,</div><div class="line">ни по оном што јој свет приди,</div><div class="line">већ што стоји кад све пада,</div><div class="line">кад се руши свака нада.</div>
-      </div>
-      <div class="stanza">
-        <div class="line">Зову песма, град и вино,</div><div class="line">смех и светло, све невино,</div><div class="line">ал’ под слављем нешто спава —</div><div class="line">сенка што се буди права.</div>
-      </div>
-      <div class="stanza">
-        <div class="line">На крововима ноћ се крије,</div><div class="line">створење јој име зна,</div><div class="line">тихо силази, без гласа,</div><div class="line">кад се свет од истине спасава.</div>
-      </div>
-      <div class="stanza">
-        <div class="line">Мост (Bridge):</div><div class="line">А што гласно истину вичу,</div><div class="line">падну, стану, страхом дишу,</div><div class="line">јер постоји сила нема —</div><div class="line">дрхте… нестају без времена.</div>
-      </div>
-      <div class="stanza">
-        <div class="line">И кад смеје се ко да је лако,</div><div class="line">као да је све то тек знак,</div><div class="line">носи ратове дубоко,</div><div class="line">што нико не би понео толико.</div>
-      </div>
-      <div class="stanza">
-        <div class="line">Припев (Final):</div><div class="line">Носи ватру што не гаси,</div><div class="line">ни кад свет јој сенке баци,</div><div class="line">није круна што је краси,</div><div class="line">већ терет што душу спаси.</div>
-      </div>
-      <div class="stanza">
-        <div class="line">Није краљица што се види,</div><div class="line">ни по оном што јој свет приди,</div><div class="line">већ што стоји кад све пада,</div><div class="line">кад се руши свака нада.</div>
-      </div>
-      <div class="stanza">
-        <div class="line">Завршница (Outro):</div><div class="line">Кад се ветар путу склони,</div><div class="line">и кад ноћ све маске склони,</div><div class="line">она бира шта ће бити,</div><div class="line">шта ће светом пролазити.</div>
-      </div>
-      <div class="stanza">
-        <div class="line">И ако све у тами гори,</div><div class="line">и нема где да се створи,</div><div class="line">биће ватра — у њој жива,</div><div class="line">не да руши,</div><div class="line">већ да бива.</div>
       </div>
     </div>
+
+    <!-- LETRAS -->
+    <div id="lyrics" class="lyrics">
+      Изабери песму 👆
+    </div>
+
   </div>
+
 </div>
 
-<!-- Script original (misma ruta, no modificada) -->
-<script src="./1_files/script.js"></script>
+<script src="script.js"></script>
 
-<!-- 
-  Nota: El script.js original maneja toda la funcionalidad: 
-  - cambiar pistas al hacer clic en playlist
-  - cargar letras desde archivos .txt (lyrics/)
-  - actualizar visualizador de audio y clases activas
-  - mantener sincronía con reproductor
-  
-  El diseño ha sido completamente embellecido sin alterar ninguna ruta de archivos multimedia, 
-  ni la estructura funcional. Todo permanece intacto: audio, portada, rutas de lyrics, canvas.
--->
 </body>
 </html>
